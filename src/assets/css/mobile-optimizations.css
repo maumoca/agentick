@@ -1,0 +1,178 @@
+/* Mobile Optimizations CSS
+   Focused on iOS/Safari compatibility and responsive design
+*/
+
+/* === General Mobile Optimizations === */
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Improve touch targets for better mobile usability */
+button, 
+a, 
+input, 
+select, 
+textarea,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* Minimum touch target size (44x44px as per Apple guidelines) */
+button, 
+a, 
+[role="button"],
+.MuiIconButton-root,
+.MuiButtonBase-root {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* === iOS Specific Fixes === */
+
+/* Fix for iOS momentum scrolling */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for iOS input styling */
+input, 
+textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+/* Fix for iOS Safari notch and safe areas */
+.MuiAppBar-root {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+.MuiDrawer-paper {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Add bottom padding to account for iOS home indicator */
+.MuiContainer-root {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
+}
+
+/* === Responsive Layout Improvements === */
+
+/* Improve grid layout on small screens */
+@media (max-width: 768px) {
+  .MuiGrid-item {
+    padding: 8px !important;
+  }
+  
+  /* Increase spacing between cards on mobile */
+  .MuiBox-root {
+    margin-bottom: 12px;
+  }
+  
+  /* Make cards full width on mobile */
+  .MuiCard-root {
+    width: 100% !important;
+  }
+  
+  /* Adjust typography for mobile */
+  .MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3 {
+    font-size: 90% !important;
+  }
+  
+  /* Adjust padding for mobile */
+  .MuiCardContent-root {
+    padding: 16px !important;
+  }
+  
+  /* Improve table display on mobile */
+  .MuiTable-root {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* === Chart Optimizations for Mobile === */
+
+/* Make charts responsive */
+.apexcharts-canvas {
+  max-width: 100% !important;
+}
+
+/* === Sidenav Mobile Optimizations === */
+
+/* Improve sidenav on mobile */
+@media (max-width: 768px) {
+  /* Ensure sidenav is properly hidden when collapsed */
+  .MuiDrawer-paper[style*="transform: translateX(-260px)"] {
+    visibility: hidden !important;
+  }
+  
+  /* Increase touch targets in sidenav */
+  .MuiListItem-root {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+}
+
+/* === Form Elements Mobile Optimizations === */
+
+/* Improve form elements on mobile */
+@media (max-width: 768px) {
+  /* Increase form field size */
+  .MuiOutlinedInput-root {
+    min-height: 48px;
+  }
+  
+  /* Improve dropdown menus */
+  .MuiMenu-paper {
+    max-height: 50vh !important;
+  }
+  
+  /* Improve dialog sizing */
+  .MuiDialog-paper {
+    margin: 16px !important;
+    width: calc(100% - 32px) !important;
+    max-width: 100% !important;
+  }
+}
+
+/* === Performance Optimizations === */
+
+/* Optimize animations for mobile */
+@media (max-width: 768px) {
+  * {
+    /* Use hardware acceleration when possible */
+    transform: translateZ(0);
+  }
+  
+  /* Reduce animation duration on mobile */
+  .MuiDrawer-root, 
+  .MuiPopover-root,
+  .MuiDialog-root,
+  .MuiCollapse-root {
+    transition-duration: 200ms !important;
+  }
+}
+
+/* === KPI Cards Mobile Optimizations === */
+
+/* Optimize KPI cards for mobile */
+@media (max-width: 768px) {
+  /* Stack KPI card content vertically */
+  .MuiCard-root [class*="KPICard"] .MuiBox-root {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  
+  /* Adjust icon size and position */
+  .MuiCard-root [class*="KPICard"] .MuiAvatar-root {
+    margin-bottom: 8px !important;
+  }
+}

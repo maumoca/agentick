@@ -33,11 +33,6 @@ import Icon from "@mui/material/Icon";
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
-import VuiButton from "components/VuiButton";
-
-// Vision UI Dashboard React example components
-import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import SidenavCard from "examples/Sidenav/SidenavCard";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
@@ -46,16 +41,26 @@ import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 // Vision UI Dashboard React context
 import { useVisionUIController, setMiniSidenav, setTransparentSidenav } from "context";
 
+// Client selector component
+import ClientSelector from "components/ClientSelector";
+
 // Vision UI Dashboard React icons
 import SimmmpleLogo from "examples/Icons/SimmmpleLogo";
+import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 
-// function Sidenav({ color, brand, brandName, routes, ...rest }) {
 function Sidenav({ color, brandName, routes, ...rest }) {
   const [controller, dispatch] = useVisionUIController();
   const { miniSidenav, transparentSidenav } = controller;
   const location = useLocation();
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
+  
+  // Detect iOS device
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  
+  // Detect mobile device
+  const isMobile = window.innerWidth < 768;
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
@@ -141,7 +146,28 @@ function Sidenav({ color, brandName, routes, ...rest }) {
   });
 
   return (
-    <SidenavRoot {...rest} variant="permanent" ownerState={{ transparentSidenav, miniSidenav }}>
+    <SidenavRoot 
+      {...rest} 
+      variant="permanent" 
+      ownerState={{ transparentSidenav, miniSidenav }}
+      sx={{
+        // iOS specific styles
+        ...(isIOS && {
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingLeft: 'env(safe-area-inset-left)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+          WebkitOverflowScrolling: 'touch'
+        }),
+        // Mobile optimizations
+        ...(isMobile && {
+          WebkitTapHighlightColor: 'transparent',
+          '& .MuiListItem-root': {
+            paddingTop: '12px',
+            paddingBottom: '12px'
+          }
+        })
+      }}
+    >
       <VuiBox
         pt={3.5}
         pb={0.5}
@@ -154,11 +180,24 @@ function Sidenav({ color, brandName, routes, ...rest }) {
         <VuiBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
-          top={0}
-          right={0}
+          top={isIOS ? 'calc(env(safe-area-inset-top) + 0.5rem)' : 0}
+          right={isIOS ? 'calc(env(safe-area-inset-right) + 0.5rem)' : 0}
           p={1.625}
           onClick={closeSidenav}
-          sx={{ cursor: "pointer" }}
+          sx={{ 
+            cursor: "pointer",
+            // Improve touch target size
+            minHeight: '44px',
+            minWidth: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // Better touch feedback
+            WebkitTapHighlightColor: 'transparent',
+            '&:active': {
+              opacity: 0.7
+            }
+          }}
         >
           <VuiTypography variant="h6" color="text">
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
@@ -208,38 +247,17 @@ function Sidenav({ color, brandName, routes, ...rest }) {
         </VuiBox>
       </VuiBox>
       <Divider light />
-      <List>{renderRoutes}</List>
-      <VuiBox
-        my={2}
-        mx={2}
-        mt="auto"
-        sx={({ breakpoints }) => ({
-          [breakpoints.up("xl")]: {
-            pt: 2,
-          },
-          [breakpoints.only("xl")]: {
-            pt: 1,
-          },
-          [breakpoints.down("xl")]: {
-            pt: 2,
-          },
-        })}
-      >
-        <SidenavCard color={color} />
-        <VuiBox mt={2}>
-          <VuiButton
-            component="a"
-            href="https://creative-tim.com/product/vision-ui-dashboard-pro-react"
-            target="_blank"
-            rel="noreferrer"
-            variant="gradient"
-            color={color}
-            fullWidth
-          >
-            Upgrade to PRO
-          </VuiButton>
-        </VuiBox>
-      </VuiBox>
+      <List sx={{
+        // Improve scrolling on iOS
+        WebkitOverflowScrolling: 'touch',
+        // Add padding for iOS home indicator
+        ...(isIOS && {
+          paddingBottom: 'env(safe-area-inset-bottom, 20px)'
+        })
+      }}>
+        {renderRoutes}
+        <ClientSelector />
+      </List>
     </SidenavRoot>
   );
 }
@@ -247,13 +265,11 @@ function Sidenav({ color, brandName, routes, ...rest }) {
 // Setting default values for the props of Sidenav
 Sidenav.defaultProps = {
   color: "info",
-  // brand: "",
 };
 
 // Typechecking props for the Sidenav
 Sidenav.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-  // brand: PropTypes.string,
   brandName: PropTypes.string.isRequired,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

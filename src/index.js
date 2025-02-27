@@ -21,6 +21,9 @@ import { createRoot} from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "App";
 
+// Import mobile optimizations CSS
+import "assets/css/mobile-optimizations.css";
+
 // Vision UI Dashboard React Context Provider
 import { VisionUIControllerProvider } from "context";
 
@@ -33,4 +36,3 @@ root.render(<BrowserRouter>
     <App />
   </VisionUIControllerProvider>
 </BrowserRouter>)
-

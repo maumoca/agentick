@@ -34,6 +34,7 @@ import { SiDropbox } from "react-icons/si";
 // Vision UI Dashboard React example components
 import TimelineItem from "examples/Timeline/TimelineItem";
 import AdobeXD from "examples/Icons/AdobeXD";
+import { TimelineProvider } from "examples/Timeline/context";
 
 // Vision UI Dashboard theme imports
 import palette from "assets/theme/base/colors";
@@ -59,32 +60,34 @@ function OrdersOverview() {
         </VuiBox>
       </VuiBox>
       <VuiBox>
-        <TimelineItem
-          icon={<FaBell size="16px" color={palette.info.main} />}
-          title="$2400, Design changes"
-          dateTime="22 DEC 7:20 PM"
-        />
-        <TimelineItem
-          icon={<IoLogoCss3 size="16px" color={palette.error.main} />}
-          title="New order #1832412"
-          dateTime="21 DEC 11 PM"
-        />
-        <TimelineItem
-          icon={<FaShoppingCart size="16px" color={palette.lightblue.main} />}
-          title="Server payments for April"
-          dateTime="21 DEC 9:34 PM"
-        />
-        <TimelineItem
-          icon={<BsCreditCardFill size="16px" color={palette.warning.main} />}
-          title="New card added for order #4395133"
-          dateTime="20 DEC 2:20 AM"
-        />
-        <TimelineItem
-          icon={<SiDropbox size="16px" color={palette.primary.focus} />}
-          title="New card added for order #4395133"
-          dateTime="18 DEC 4:54 AM"
-        />
-        <TimelineItem icon={<AdobeXD size="20px" />} title="New order #9583120" dateTime="17 DEC" />
+        <TimelineProvider value={false}>
+          <TimelineItem
+            icon={<FaBell size="16px" color={palette.info.main} />}
+            title="$2400, Design changes"
+            dateTime="22 DEC 7:20 PM"
+          />
+          <TimelineItem
+            icon={<IoLogoCss3 size="16px" color={palette.error.main} />}
+            title="New order #1832412"
+            dateTime="21 DEC 11 PM"
+          />
+          <TimelineItem
+            icon={<FaShoppingCart size="16px" color={palette.lightblue.main} />}
+            title="Server payments for April"
+            dateTime="21 DEC 9:34 PM"
+          />
+          <TimelineItem
+            icon={<BsCreditCardFill size="16px" color={palette.warning.main} />}
+            title="New card added for order #4395133"
+            dateTime="20 DEC 2:20 AM"
+          />
+          <TimelineItem
+            icon={<SiDropbox size="16px" color={palette.primary.focus} />}
+            title="New card added for order #4395133"
+            dateTime="18 DEC 4:54 AM"
+          />
+          <TimelineItem icon={<AdobeXD size="20px" />} title="New order #9583120" dateTime="17 DEC" />
+        </TimelineProvider>
       </VuiBox>
     </Card>
   );
