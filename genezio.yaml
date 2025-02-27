@@ -1,26 +1,20 @@
-name: agentick-dashboard
-region: us-east-1
 frontend:
-  # Specifies the path of your code.
-  path: .
-  # Specifies the folder where the build is located.
-  # This is the folder that will be deployed.
-  publish: build
-  # Scripts will run in the specified `path` folder.
-  scripts:
-    # The command to build your frontend project. This is custom to your project.
-    # It must to populate the specified `publish` folder with a `index.html` file.
-    deploy:
-      - npm install --legacy-peer-deps
-      - npm run build
-  # Environment variables for the deployment
-  environment:
-    REACT_APP_FIREBASE_API_KEY: ${REACT_APP_FIREBASE_API_KEY}
-    REACT_APP_FIREBASE_AUTH_DOMAIN: ${REACT_APP_FIREBASE_AUTH_DOMAIN}
-    REACT_APP_FIREBASE_PROJECT_ID: ${REACT_APP_FIREBASE_PROJECT_ID}
-    REACT_APP_FIREBASE_STORAGE_BUCKET: ${REACT_APP_FIREBASE_STORAGE_BUCKET}
-    REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${REACT_APP_FIREBASE_MESSAGING_SENDER_ID}
-    REACT_APP_FIREBASE_APP_ID: ${REACT_APP_FIREBASE_APP_ID}
-    REACT_APP_NAME: "Agentick Dashboard"
-    REACT_APP_VERSION: "1.0.0"
+    environment:
+        REACT_APP_FIREBASE_API_KEY: ${REACT_APP_FIREBASE_API_KEY}
+        REACT_APP_FIREBASE_APP_ID: ${REACT_APP_FIREBASE_APP_ID}
+        REACT_APP_FIREBASE_AUTH_DOMAIN: ${REACT_APP_FIREBASE_AUTH_DOMAIN}
+        REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${REACT_APP_FIREBASE_MESSAGING_SENDER_ID}
+        REACT_APP_FIREBASE_PROJECT_ID: ${REACT_APP_FIREBASE_PROJECT_ID}
+        REACT_APP_FIREBASE_STORAGE_BUCKET: ${REACT_APP_FIREBASE_STORAGE_BUCKET}
+        REACT_APP_NAME: Agentick Dashboard
+        REACT_APP_VERSION: 1.0.0
+    path: .
+    publish: build
+    scripts:
+        deploy:
+            - npm install --legacy-peer-deps
+            - npm run build
+    subdomain: agentickdashboard
+name: agentickdashboard
+region: us-east-1
 yamlVersion: 2
